@@ -43,6 +43,10 @@
 			<th>READ_COUNT</th>
 			<td>${bvo.readCount }</td>
 		</tr>
+		<tr>
+			<th>첨부파일</th>
+			<td>${bvo.hasFile}</td>
+		</tr>
 
 		<!-- 등록파일 목록 -->
 		<tr>
@@ -137,6 +141,7 @@
 
 	<script type="text/javascript">
 		getCommentList(bnoVal);
+		getFileList(bnoVal);
 	</script>
 </body>
 </html>

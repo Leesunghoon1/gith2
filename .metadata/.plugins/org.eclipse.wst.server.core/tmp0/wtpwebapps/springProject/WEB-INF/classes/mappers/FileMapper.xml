@@ -9,4 +9,8 @@
   				insert into file(uuid, save_dir, file_name, file_type, bno, file_size)
   		values(#{uuid}, #{saveDir}, #{fileName}, #{fileType}, #{bno}, #{fileSize})
   	</insert>
+  	
+  	<select id="getFileList" resultType="com.myweb.www.domain.FileVO">
+  		select * from file where bno = #{bno} order by reg_date desc
+  	</select>
   </mapper>

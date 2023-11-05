@@ -28,3 +28,7 @@
 11월 05, 2023 19:13:19.926 [17312:19952:1105/191319.926:ERROR:connection_factory_impl.cc(471)] ConnectionHandler failed with net error: -2
 11월 05, 2023 19:14:22.32 [17312:19952:1105/191422.032:ERROR:connection_factory_impl.cc(471)] ConnectionHandler failed with net error: -2
 11월 05, 2023 19:46:28.264 [17312:19952:1105/194628.263:ERROR:connection_factory_impl.cc(428)] Failed to connect to MCS endpoint with error -7
+11월 05, 2023 21:15:13.82 [11108:17764:1105/211513.082:ERROR:connection_factory_impl.cc(471)] ConnectionHandler failed with net error: -2
+11월 05, 2023 21:17:47.556 [11108:17764:1105/211747.556:ERROR:connection_factory_impl.cc(471)] ConnectionHandler failed with net error: -2
+11월 05, 2023 23:52:50.659 [11108:17764:1105/235250.659:ERROR:connection_factory_impl.cc(471)] ConnectionHandler failed with net error: -2
+11월 06, 2023 24:40:29.874 [11108:17764:1106/004029.874:ERROR:connection_factory_impl.cc(471)] ConnectionHandler failed with net error: -2

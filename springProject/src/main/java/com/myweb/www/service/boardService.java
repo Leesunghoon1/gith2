@@ -23,4 +23,6 @@ public interface boardService {
 
 	int register(BoardDTO boardDTO);
 
+	BoardDTO getModift(int bno);
+
 }

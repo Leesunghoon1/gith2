@@ -96,5 +96,12 @@ public class BoardServiceImpl implements boardService{
 	}
 
 
+	@Override
+	public BoardDTO getModift(int bno) {
+		// TODO Auto-generated method stub
+		return new BoardDTO(bdao.getDetail(bno), fdao.getFileList(bno));
+	}
+
+
 	
 }

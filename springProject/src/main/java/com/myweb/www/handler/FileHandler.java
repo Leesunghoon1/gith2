@@ -80,7 +80,7 @@ public class FileHandler {
 				if (isImageFile(storeFile)) {
 					fvo.setFileType(1);
 					// 썸네일 생성
-					File thumbNail = new File(folders, uuid.toString() + "_th_" + fileName);
+					File thumbNail = new File(folders, uuid.toString()+"_th_"+fileName);
 					Thumbnails.of(storeFile).size(75, 75).toFile(thumbNail);
 				}
 			} catch (Exception e) {

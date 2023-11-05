@@ -5,9 +5,13 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -92,6 +96,14 @@ public class BoardController {
 		log.info("bvo = {}", bvo);
 		m.addAttribute("bvo", bvo);
 	}
+	
+	// 화면에 비동기로 파일 리스트 뿌리기
+	@GetMapping(value="spread/{bno}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<FileVO>> spread(@PathVariable("bno")int bno) {
+		BoardDTO bdto = bsv.getModift(bno);
+		return new ResponseEntity<List<FileVO>>(bdto.getFlist(), HttpStatus.OK);
+	}
+	
 
 	@GetMapping("modify")
 	public void getModify(Model m, @RequestParam("bno")int bno) {
