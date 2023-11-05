@@ -1,0 +1,91 @@
+package com.myweb.www.service;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.myweb.www.domain.BoardDTO;
+import com.myweb.www.domain.BoardVO;
+import com.myweb.www.domain.FileVO;
+import com.myweb.www.domain.PagingVO;
+import com.myweb.www.repository.BoardDAO;
+
+import lombok.extern.slf4j.Slf4j;
+
+
+@Slf4j
+@Service
+public class BoardServiceImpl implements boardService{
+	
+	@Inject
+	private BoardDAO bdao;
+	
+	@Inject
+	private FileDAO fdao;
+
+	/* 파일 하기 전 register
+	 * @Override public int PostRegister(BoardVO bvo) { // TODO Auto-generated
+	 * method stub return bdao.PostRegister(bvo); }
+	 */
+
+	@Transactional
+	@Override
+	public BoardVO getDetail(long bno) {
+		// TODO Auto-generated method stub
+		
+		int isOK = bdao.readCount(bno);
+		log.info("조회수 >> " + (isOK > 0 ? "UP" : "ERROR"));
+		return bdao.getDetail(bno);
+	}
+
+	@Override
+	public int postModify(BoardVO bvo) {
+		// TODO Auto-generated method stub
+		return bdao.postModify(bvo);
+	}
+
+	@Override
+	public int remove(int bno) {
+		// TODO Auto-generated method stub
+		return bdao.remove(bno);
+	}
+
+	@Override
+	public int getTotalCount(PagingVO pvo) {
+		// TODO Auto-generated method stub
+		return bdao.getTotalCount(pvo);
+	}
+
+	@Override
+	public List<BoardVO> getList(PagingVO pvo) {
+		// TODO Auto-generated method stub
+				return bdao.getList(pvo);
+	}
+
+
+	@Override
+	public int PostRegister(BoardDTO boardDTO) {
+		// TODO Auto-generated method stub
+		int isUp = boardDTO.register(boardDTO.getBvo());
+		if(boardDTO.getFlist() == null) {
+			//사진이없더라도 등록되게 마지막 * 1 해주는거
+			isUp *= 1;
+		}else {
+			// bvo insert 후, 파일도 있다면 ...
+			if(isUp > 0 && boardDTO.getFlist().size() > 0) {
+				long bno = bdao.selectOneBno();
+				//가장 마지막에 등록된 bno
+				for(FileVO fvo : boardDTO.getFlist()) {
+					fvo.setBno(bno);
+					isUp *= fdao.insertFile(fvo);
+				}
+			}
+		}
+	}
+
+
+	
+}

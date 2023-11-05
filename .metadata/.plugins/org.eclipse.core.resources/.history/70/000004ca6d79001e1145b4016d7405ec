@@ -1,0 +1,21 @@
+package com.myweb.www.repository;
+
+import java.util.List;
+
+import com.myweb.www.domain.BoardVO;
+
+public interface BoardDAO {
+
+	int PostRegister(BoardVO bvo);
+
+	List<BoardVO> getList();
+
+	BoardVO getDetail(long bno);
+
+	int postModify(BoardVO bvo);
+
+	int remove(int bno);
+
+	int readCount(long bno);
+
+}
