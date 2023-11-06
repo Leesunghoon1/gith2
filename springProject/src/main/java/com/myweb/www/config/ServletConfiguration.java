@@ -12,6 +12,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 @EnableWebMvc
+//@EnableWebMvc : Controller 어노테이션이 셋팅되어 있는 클래스를 Controller로 등록한다. // <annotation-driven/>
+
 @ComponentScan(basePackages = {"com.myweb.www.controller", "com.myweb.www.handler"})
 public class ServletConfiguration implements WebMvcConfigurer{
 

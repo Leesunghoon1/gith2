@@ -1,0 +1,18 @@
+package com.myweb.www.service;
+
+import com.myweb.www.security.MemberVO;
+
+public class MemberServiceImpl implements MemberService{
+
+	@Override
+	public boolean updateLastLogin(String authEmail) {
+		return mdao.updateLastLogin(authEmail) > 0 ? true : false;
+	}
+
+	@Override
+	public int register(MemberVO mvo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+}
