@@ -37,6 +37,7 @@
 	<select id="selectOneBno" resultType="long">
 		select max(bno) from board;
 	</select>
+	
 
 	<sql id="search">
 		<if test="type != null">

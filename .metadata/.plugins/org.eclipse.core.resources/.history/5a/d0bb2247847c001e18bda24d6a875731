@@ -1,0 +1,15 @@
+package com.myweb.www.security;
+
+import org.springframework.test.annotation.Commit;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+@Slf4j
+@Getter
+@Setter
+public class LoginFailureHandler {
+
+}

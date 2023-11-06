@@ -13,4 +13,12 @@
   	<select id="getFileList" resultType="com.myweb.www.domain.FileVO">
   		select * from file where bno = #{bno} order by reg_date desc
   	</select>
+  	
+  	<delete id="deleFile">
+  		delete from file where uuid = #{uuid}
+  	</delete>
+  	
+  	  <select id="getAllFilee" resultType="com.myweb.www.domain.FileVO">
+  		select * from file
+  	</select>
   </mapper>

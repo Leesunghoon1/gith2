@@ -1,0 +1,32 @@
+package com.myweb.www.config;
+
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import com.myweb.www.security.LoginSuccessHandler;
+
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	// security package를 생성하여 사용자 핸들러 생성
+	
+	
+	@Bean
+	public PasswordEncoder bcPasswordEncoder() {
+		// password 암호화 객체 빈 생성
+		return new BCryptPasswordEncoder();
+		//비밀번호를 안전하게 저장하기 위해 사용됩니다. 일반적으로 사용자의 비밀번호를 저장할 때 암호화하여 저장하고, 
+		//로그인 시에 비밀번호를 해시(암호화)한 값과 사용자가 입력한 비밀번호를 해시하여 비교하여 인증을 수행합니다.
+	}
+	
+	@Bean
+	public AuthenticationSuccessHandler authSuccessHandler() {
+		// SuccessHandler 빈 객체 생성 => 사용자가 생성
+		return new LoginSuccessHandler();
+	}
+	
+	
+	
+}

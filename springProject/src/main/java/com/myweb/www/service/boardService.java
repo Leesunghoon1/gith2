@@ -25,4 +25,8 @@ public interface boardService {
 
 	BoardDTO getModift(int bno);
 
+	int deleFile(String uuid);
+
+	int postModify(BoardDTO boardDTO);
+
 }

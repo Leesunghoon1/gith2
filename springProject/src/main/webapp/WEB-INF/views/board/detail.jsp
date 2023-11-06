@@ -128,8 +128,10 @@
 
 		</div>
 	</div>
+	<!-- 이쪽 이해안됨 -->
 	<script type="text/javascript">
 		let isOk = `<c:out value="${isOk}" />`;
+		//컨트롤러에서 isOK받아서 확인중
 		if (parseInt(isOk)) {
 			alert("수정 성공!!");
 		}

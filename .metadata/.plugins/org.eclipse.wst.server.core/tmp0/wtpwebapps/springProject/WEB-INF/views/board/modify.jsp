@@ -11,7 +11,7 @@
 	<jsp:include page="../common/header.jsp"></jsp:include>
 	<jsp:include page="../common/nav.jsp"></jsp:include>
 
-	<form action="/board/modify" method="post">
+	<form action="/board/modify" method="post" enctype="multipart/form-data">
 		div class="position-absolute top-50 start-50 translate-middle">
 		<div class="table-box">
 			<div class="title">
@@ -38,15 +38,55 @@
 					<td><textarea class="form-control" aria-label="With textarea"
 							name="content"></textarea></td>
 				</tr>
+				<!-- 등록파일 목록 -->
+				<tr>
+					<td colspan="2">
+						<dl id="files-ul">
+						</dl>
+					</td>
+				</tr>
+
+				<!-- 파일 업로드 영역  -->
+				<tr>
+					<td colspan="2">
+						<div class="input-group mb-3">
+							<input type="file" class="form-control" multiple="multiple"
+								style="display: none" id="files" name="files"
+								aria-describedby="basic-addon1">
+							<!-- input button trigger 용도 -->
+						</div>
+						<div class="fileupload-btn-box">
+							<button type="button" id="trigger" class="btn btn-secondary">파일첨부</button>
+						</div> <!-- 첨부파일 표시 영역 -->
+						<div class="input-group mb-3" id="file-zone"></div>
+					</td>
+				</tr>
+
 			</table>
 		</div>
 		<div class="button-box">
-		<div>
-			<button type="submit" id="button" class="btn btn-outline-secondary">수정</button>
-			<a href="/board/remove?bno=${bvo.bno }"><button type="button" id="button" class="btn btn-outline-secondary">삭제</button></a>
-		</div> 
+			<div>
+				<button type="submit" id="button" class="btn btn-outline-secondary">수정</button>
+				<a href="/board/remove?bno=${bvo.bno}"><button type="button"
+						id="button" class="btn btn-outline-secondary">삭제</button></a>
+			</div>
 		</div>
 	</form>
+	<script type="text/javascript">
+	let bnoVal = `<c:out value="${bvo.bno}" />`;
+	//컨트롤러에서 가져온 bvo.bno를 bnoVal 에 저장함
+	console.log(bnoVal);
+</script>
+<script type="text/javascript" src="/resources/js/boardRegister.js"></script>
+<script type="text/javascript" src="/resources/js/boardFile.js" ></script>
+
+
+
+<script type="text/javascript">
+	getFileList(bnoVal);
+	//js에 있는 메소드 사용함(bnoVal)주고
+</script>
+
 
 	<jsp:include page="../common/footer.jsp"></jsp:include>
 </body>

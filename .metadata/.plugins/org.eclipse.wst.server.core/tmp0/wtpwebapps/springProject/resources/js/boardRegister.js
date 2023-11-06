@@ -40,6 +40,7 @@
 
         const fileObj = document.getElementById('files').files;
         // input file element에 저장된 file의 정보를 가져오는 property
+
         console.log(fileObj);
 
         let div = document.getElementById('file-zone');
@@ -54,6 +55,7 @@
             let validResult = fileValidation(file.name, file.size);
              // 0 또는 1로 리턴
              isOK *= validResult;
+             //하나라도 안되면 * 0을 해서 싹다 0으로 등록이 안되게
              ul += `<li class="list-group-item">`;
              ul += `<div class="input-group mb-3">`;
              ul += `${validResult ? '<div class="input-group mb-3">업로드 가능</div>' : '<div class="input-group mb-3">업로드 불가능</div>'}`;
@@ -62,8 +64,8 @@
         }
         ul += `</ul>`;
         div.innerHTML = ul;
-
-        if(isOk == 0){
+        console.log(isOK);
+        if(isOK == 0){
             document.getElementById('button').disabled = true;
         }
     }

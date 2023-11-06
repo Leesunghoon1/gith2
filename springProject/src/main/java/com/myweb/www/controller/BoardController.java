@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -104,6 +105,18 @@ public class BoardController {
 		return new ResponseEntity<List<FileVO>>(bdto.getFlist(), HttpStatus.OK);
 	}
 	
+	
+	//파일 삭제
+	@DeleteMapping(value="{uuid}", produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> deleteFile(@PathVariable("uuid")String uuid) {
+		int isOK = bsv.deleFile(uuid);
+		
+		return isOK > 0 ? new ResponseEntity<String>("1", HttpStatus.OK) : new ResponseEntity<String>("0", HttpStatus.INTERNAL_SERVER_ERROR);
+		
+	}
+	
+	
+	
 
 	@GetMapping("modify")
 	public void getModify(Model m, @RequestParam("bno")int bno) {
@@ -114,9 +127,17 @@ public class BoardController {
 	}
 	
 	@PostMapping("modify")
-	public String postModify(BoardVO bvo, RedirectAttributes re) {
+	public String postModify(BoardVO bvo, RedirectAttributes re, @RequestParam(name="files", required = false)MultipartFile[] files) {
 				//리턴 리다이렉트에 bno를 가져가려고 RedirectAttributes 이걸 쓴다 
-				int isOK = bsv.postModify(bvo);
+		List<FileVO> flist = null;
+		//파일이랑 글 수정 둘중에 하나만 하는 경우도 있으니 글만 수정했으면 파일을 널로 처리하고
+		//file upload handler 생성
+		if(files[0].getSize() > 0) {
+			//파일이 있으면 핸들러로 넘어가라~
+			flist = fh.uploadFiles(files);
+		}
+				int isOK = bsv.postModify(new BoardDTO(bvo, flist));
+				re.addFlashAttribute("isOK", isOK);
 				re.addAttribute("bno", bvo.getBno());
 				return "redirect:/board/detail";
 				

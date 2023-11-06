@@ -103,5 +103,34 @@ public class BoardServiceImpl implements boardService{
 	}
 
 
+	@Override
+	public int deleFile(String uuid) {
+		// TODO Auto-generated method stub
+		return fdao.deleFile(uuid);
+	}
+
+	@Transactional
+	@Override
+	public int postModify(BoardDTO bdto) {
+		// TODO Auto-generated method stub
+		int isUp = bdao.PostRegister(bdto.getBvo());
+		if(bdto.getFlist() == null) {
+			//파일이 없다면 그냥 있다치고 *= 하고 넘어가고
+			isUp *= 1;
+		}else {
+			// bvo update 후, 파일도 있다면
+			if(isUp > 0 && bdto.getFlist().size() > 0) {
+				long bno = bdto.getBvo().getBno();
+				// bdto에서 받아온 bno로 셋팅
+				for(FileVO fvo : bdto.getFlist()) {
+					fvo.setBno(bno);
+					isUp *= fdao.insertFile(fvo);
+				}
+			}
+		}
+		return isUp;
+	}
+
+
 	
 }
