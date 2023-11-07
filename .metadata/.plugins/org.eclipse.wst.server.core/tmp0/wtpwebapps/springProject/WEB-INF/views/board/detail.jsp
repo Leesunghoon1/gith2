@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 
 <!DOCTYPE html>
 <html>
@@ -11,10 +13,13 @@
 
 <body>
 
+
 	<jsp:include page="../common/header.jsp" />
 	<jsp:include page="../common/nav.jsp" />
-	<h1>디테일 페이지</h1>
 
+
+	<h1>디테일 페이지</h1>
+	<sec:authentication property="principal.mvo.email" var="authEmail"></sec:authentication>
 	<table border="1">
 
 		<tr>
@@ -71,14 +76,23 @@
 					<!-- 댓글영역  -->
 					<!-- 댓글 영역 -->
 					<div class="comment-box">
-						<div class="input-group flex-nowrap" id="comment-input">
-							<span class="input-group-text" id="cmtWriter">
-								${bvo.writer} </span> <input type="text" class="form-control"
-								id="cmtContent" placeholder="댓글 입력" aria-label="Username"
-								aria-describedby="addon-wrapping">
-							<button class="btn btn-outline-secondary" type="button"
-								id="cmtPostBtn">댓글등록</button>
-						</div>
+
+						<sec:authorize access="isAuthenticated()">
+							<sec:authentication property="principal.mvo.email"
+								var="authEmail" />
+
+							<div class="input-group flex-nowrap" id="comment-input">
+								<span class="input-group-text" id="cmtWriter">
+									${authEmail} </span> <input type="text" class="form-control"
+									id="cmtContent" placeholder="댓글 입력" aria-label="Username"
+									aria-describedby="addon-wrapping">
+								<button class="btn btn-outline-secondary" type="button"
+									id="cmtPostBtn">댓글등록</button>
+
+							</div>
+						</sec:authorize>
+
+
 						<div class="title"></div>
 						<table id="comment-table" class="table table-dark table-hover">
 

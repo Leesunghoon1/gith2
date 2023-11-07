@@ -74,14 +74,14 @@
 							<c:choose>
 								<c:when
 									test="${auths.stream().anyMatch(authVO -> authVO.auth.equals('ROLE_ADMIN')).get()}">
-									<li class="nav-item"><a class="nav-link" href="#">*ADMIN
+									<li class="nav-item"><a class="nav-link" href="#">*운영자
 											${authNick}(${authEmail})</a></li>
 									<li class="nav-item"><a class="nav-link"
 										href="/member/list">Member List</a></li>
 								</c:when>
 								<c:when
 									test="${auths.stream().anyMatch(authVO -> authVO.auth.equals('ROLE_USER')).get()}">
-									<li class="nav-item"><a class="nav-link" href="#">*ROLE_USER
+									<li class="nav-item"><a class="nav-link" href="#">*일반유저
 											${authNick}(${authEmail})</a></li>
 								</c:when>
 								<c:otherwise>

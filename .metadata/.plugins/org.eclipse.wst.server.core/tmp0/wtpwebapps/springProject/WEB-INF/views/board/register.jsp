@@ -12,6 +12,8 @@
 <body>
 	<jsp:include page="../common/header.jsp" />
 	<jsp:include page="../common/nav.jsp" />
+			
+		<sec:authentication property="principal.mvo.email" var="authEmail" />
 
 	<form action="/board/register" method="post"
 		enctype="multipart/form-data">
@@ -23,7 +25,7 @@
 
 		<div class="mb-3">
 			<label for="w" class="form-label">작성자</label> <input type="text"
-				class="form-control" name="writer" id="w" placeholder="Email">
+				class="form-control" name="writer" id="w" placeholder="Email" value="${authEmail}" readonly="readonly">
 		</div>
 
 
