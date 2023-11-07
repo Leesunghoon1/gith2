@@ -32,3 +32,6 @@
 11월 05, 2023 21:17:47.556 [11108:17764:1105/211747.556:ERROR:connection_factory_impl.cc(471)] ConnectionHandler failed with net error: -2
 11월 05, 2023 23:52:50.659 [11108:17764:1105/235250.659:ERROR:connection_factory_impl.cc(471)] ConnectionHandler failed with net error: -2
 11월 06, 2023 24:40:29.874 [11108:17764:1106/004029.874:ERROR:connection_factory_impl.cc(471)] ConnectionHandler failed with net error: -2
+
+11월 07, 2023 20:59:10.394 NEW SESSION
+11월 07, 2023 20:59:10.394 [27448:12200:1107/205910.389:ERROR:interface_endpoint_client.cc(702)] Message 1 rejected by interface blink.mojom.WidgetHost

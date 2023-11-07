@@ -17,4 +17,12 @@ public interface MemberDAO {
 
 	int insertAuthInit(String email);
 
+	List<MemberVO> getMemberList();
+
+	MemberVO getMember(String email);
+
+	int modify(MemberVO mvo);
+
+	int remove(String email);
+
 }

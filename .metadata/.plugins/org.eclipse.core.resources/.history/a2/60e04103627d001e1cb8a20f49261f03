@@ -1,0 +1,106 @@
+package com.myweb.www.controller;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.myweb.www.security.MemberVO;
+import com.myweb.www.service.MemberService;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@Slf4j
+@RequestMapping("/member/*")
+public class MemberController {
+
+	@Inject
+	private BCryptPasswordEncoder bcEncoder;
+
+	@Inject
+	private MemberService msv;
+
+	@GetMapping("register")
+	public void register() {
+
+	}
+
+	@PostMapping("register")
+	public String register(MemberVO mvo) {
+
+		mvo.setPwd(bcEncoder.encode(mvo.getPwd()));
+		// 암호화 setpwd에 bcEncoder에 encode하면 바꿔줌(mvo.getPwd)로 받는 mvo의 페스워드를 바꿔서 setPwd로
+		// 바꿔줌
+		int isOK = msv.register(mvo);
+		return "index";
+	}
+
+	@GetMapping("login")
+	public void login() {
+
+	}
+
+	@PostMapping("login")
+	public String loginPost(HttpServletRequest reqeust, RedirectAttributes re) {
+		// 로그인 실패시 다시 로그인 페이지로 돌아와 오류 메시지 전송
+		// 다시 로그인 유도
+		
+		re.addAttribute("email", reqeust.getAttribute("email"));
+		re.addAttribute("errMsg", reqeust.getAttribute("errMsg"));
+		
+		return "redirect:/member/login";
+	}
+	
+	@GetMapping("list")
+	public void getMemberList(Model m) {
+		List<MemberVO> mlist = msv.getMemberList();
+		m.addAttribute("mlist", mlist);
+	}
+	
+	@GetMapping("detail/{authEmail}")
+	//{authEmail} 받는 이유가 / 로 받으려고 보안 ? 그런느낌? / 받으면 @PathVariable 써야됨  
+	public String getMemberInfo(@PathVariable("authEmail")String email, Model m) {
+		MemberVO mvo = msv.getMember(email);
+		log.info("detail mvo >>>>" + mvo);
+		m.addAttribute("mvo", mvo);
+		return "/member/detail";
+	}
+	
+	@GetMapping("modify")
+	public void getModify(@RequestParam("email")String email, Model m) {
+		MemberVO mvo = msv.getMember(email);
+		//이메일을 mapper에 보내주면 이메일이랑 같은 정보 를 가져옴
+		m.addAttribute("mvo", mvo);
+	}
+	
+	@PostMapping("modify")
+	public String postModify(MemberVO mvo, HttpServletRequest request, HttpServletResponse response, RedirectAttributes re) {
+		if(mvo.getPwd()==null || mvo.getPwd().equals("")) {
+			re.addFlashAttribute("pwdError", 2);
+			return "redirect:/member/moidfy?email=" + mvo.getEmail();
+		}else {
+			mvo.setPwd(bcEncoder.encode(mvo.getPwd()));
+			int isOK = msv.modify(mvo);
+			log.info("modify >> " + (isOK > 0 ? "success" : "fail"));
+			
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		}
+	}
+	
+}

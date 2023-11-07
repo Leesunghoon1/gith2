@@ -69,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// http 승인 요청
 		http.authorizeRequests().antMatchers("/member/list").hasRole("ADMIN") // 관리자 권한
 		.antMatchers("/","/board/list","/board/detail","/resources/**","/upload/**","/board/spread/*"
-				,"/comment/**","/member/register","/member/login").permitAll() // 모든 이용자 권한
+				, "/board/register", "/comment/**","/member/register","/member/login").permitAll() // 모든 이용자 권한
 		.anyRequest().authenticated(); // => 인증된 사용자만 처리
 		// 모든 이용자 권한
 		// => 인증된 사용자만 처리

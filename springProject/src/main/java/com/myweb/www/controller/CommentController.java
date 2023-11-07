@@ -51,6 +51,7 @@ public class CommentController {
 	public ResponseEntity<String> post(@RequestBody CommentVO cvo){
 		//@RequestBody CommentVO cvo js에서 바디에 댓글을 담아서 여기로 받고 
 		//mapper에 보내서 정보값 입력
+		
 		int isOk = csv.addComment(cvo);
 		return isOk > 0 ? new ResponseEntity<String> ("1", HttpStatus.OK) :new ResponseEntity<String>("0", HttpStatus.INTERNAL_SERVER_ERROR);
 		
@@ -73,8 +74,12 @@ public class CommentController {
 	
 	@PutMapping(value="/{cno}", 
 			consumes = "application/json", produces = MediaType.TEXT_PLAIN_VALUE)
-	public ResponseEntity<String> edit(@RequestBody CommentVO cvo, HttpServletRequest request) {
+	public ResponseEntity<String> edit(@RequestBody CommentVO cvo, HttpServletRequest request, Principal principal) {
 		log.info("댓글 수정 cvo {}", cvo);
+		if (!(cvo.getWriter().equals(principal.getName()))) {
+			return new ResponseEntity<String>("0", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
 		int isOK = csv.edit(cvo);
 		return isOK > 0 ? new ResponseEntity<String>("1", HttpStatus.OK)
 				: new ResponseEntity<String>("0", HttpStatus.INTERNAL_SERVER_ERROR);
