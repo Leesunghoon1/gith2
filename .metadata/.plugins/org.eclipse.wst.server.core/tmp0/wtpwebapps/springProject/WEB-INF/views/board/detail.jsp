@@ -19,7 +19,9 @@
 
 
 	<h1>디테일 페이지</h1>
-	<sec:authentication property="principal.mvo.email" var="authEmail"></sec:authentication>
+	<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal.mvo.email" var="authEmail" />
+	</sec:authorize>
 	<table border="1">
 
 		<tr>
